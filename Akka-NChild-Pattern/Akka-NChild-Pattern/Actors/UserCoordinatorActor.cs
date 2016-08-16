@@ -36,10 +36,5 @@ namespace Akka_NChild_Pattern.Actors
                 Context.ActorOf<UserActor>(login.Username);
             }
         }
-
-        private bool Exists(string login)
-        {
-            return true;
-        }
     }
 }
