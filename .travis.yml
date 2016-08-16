@@ -1,0 +1,6 @@
+language: csharp
+script:
+  - xbuild /p:Configuration=Debug Akka-NChild-Pattern/Akka-NChild-Pattern.sln
+
+before_script:
+- nuget restore Akka-NChild-Pattern/Akka-NChild-Pattern.sln
