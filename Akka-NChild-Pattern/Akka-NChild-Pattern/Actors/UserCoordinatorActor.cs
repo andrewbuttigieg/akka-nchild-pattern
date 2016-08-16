@@ -1,5 +1,6 @@
 ﻿using Akka.Actor;
 using Akka_NChild_Pattern.Messages;
+using System;
 
 namespace Akka_NChild_Pattern.Actors
 {
@@ -10,9 +11,18 @@ namespace Akka_NChild_Pattern.Actors
             Receive<LoginMessage>(login =>
             {
                 IActorRef identityActor = Context.ActorOf<IdentityActor>();
-                if (identityActor.Ask<bool>(login, new System.TimeSpan(0, 0, 5)))
+                var task = identityActor.Ask<bool>(login);
+                task.Wait();
+
+                var valid = task.Result;
+                if(valid)
                 {
+                    Console.WriteLine($"User \"{login.Username}\" is valid and logging in.");
                     Login(login);
+                }
+                else
+                {
+                    Console.WriteLine($"User \"{login.Username}\" is not valid.");
                 }
             });
             
